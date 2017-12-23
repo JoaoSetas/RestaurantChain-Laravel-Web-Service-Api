@@ -19,11 +19,11 @@ Route::group(['middleware' => 'auth:api'], function() {
         return $request->user();
     });
 
+    Route::get('/produtos', 'ProdutoController@index')->name('produtos');
+
+    Route::get('/produto/{produto}', 'ProdutoController@show');
+
 });
-
-Route::get('/produtos', 'ProdutoController@index')->name('produtos');
-
-Route::get('/produto/{produto}', 'ProdutoController@show');
 
 Route::post('/register', 'RegisterController@register');
 

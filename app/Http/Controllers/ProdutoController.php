@@ -95,9 +95,9 @@ class ProdutoController extends Controller
     public function show(Produto $produto)
     {
         return fractal()
-        ->item($produto)
-        ->transformWith(new produtoTrasformer())
-        ->toArray();
+            ->item($produto)
+            ->transformWith(new produtoTrasformer())
+            ->toArray();
     }
 
     /**
