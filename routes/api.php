@@ -12,11 +12,7 @@ Use App\Article;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+se mudares alguma coisa vai aparecer na outra janela
 Route::post('/register','RegisterController@register'); //Rota para formulário de registo
 
 Route::post('login', 'Auth\LoginController@login');//rota para o login
