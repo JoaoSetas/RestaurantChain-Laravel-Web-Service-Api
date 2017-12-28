@@ -9,8 +9,11 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        //ao fazer php artisan db:seed executa as classes todas porque estão a ser chamadas nesta função run
+        $this->call(ArticlesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
     }
 }

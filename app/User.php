@@ -8,7 +8,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable,HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -16,8 +16,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'name', 'email', 'password',
     ];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -27,8 +28,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function avatar(){
-        return 'https://www.gravatar.com/avatar/' . md5($this->email) . '?s=45&d=mm';  //hash email and get avatar
-    }
 }

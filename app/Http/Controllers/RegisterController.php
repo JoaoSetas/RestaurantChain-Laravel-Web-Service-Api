@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreUserRequest;
-use App\Transformers\UserTransformer;
+use App\Http\Requests\UserRequest;//do
+use App\User;//do
+
 
 class RegisterController extends Controller
 {
-    public function register(StoreUserRequest $request){
-        $user = new User;
-        $user->username = $request->username;
+    
+    public function register(UserRequest $request){//do
+        $user=new User;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-
-        $user->save();
-
-        return fractal()    //Transforma os dados da base de dados para uma Predefinição json para todas as aplicações que usam esta API
-            ->item($user)
-            ->transformWith(new UserTransformer)
-            ->toArray();
+        $user ->save();
         
-    } 
+    }
 }

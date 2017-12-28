@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'WebService'),
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -167,10 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
-
         Laravel\Passport\PassportServiceProvider::class,
-        Spatie\Fractal\FractalServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
