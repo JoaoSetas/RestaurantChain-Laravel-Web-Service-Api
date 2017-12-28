@@ -13,7 +13,6 @@ use App\Produto;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-test
 Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('/user', function (Request $request) {
