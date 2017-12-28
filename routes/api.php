@@ -12,7 +12,7 @@ Use App\Article;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-se mudares alguma coisa vai aparecer na outra janela
+os que dizem origin antes são os que estao na net no git os outro sao o que tens localmente no teu pc
 Route::post('/register','RegisterController@register'); //Rota para formulário de registo
 
 Route::post('login', 'Auth\LoginController@login');//rota para o login
