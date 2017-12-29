@@ -27,3 +27,12 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 Route::post('/register', 'RegisterController@register');
 
+//TODO function update
+Route::resource('restaurante', 'RestauranteController',
+                ['only' => ['index', 'update']]);
+
+//TODO all other controller resources
+Route::get('restaurante/menu', 'MenuController@index');
+
+Route::get('restaurante/menu/{menu}', 'MenuController@show');
+

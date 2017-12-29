@@ -94,6 +94,7 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
+        //Way to do fractal without eloquent call
         return fractal()
             ->item($produto)
             ->transformWith(new produtoTrasformer())
