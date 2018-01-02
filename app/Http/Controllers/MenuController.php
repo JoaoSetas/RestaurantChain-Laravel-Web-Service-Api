@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Menu;
 use Illuminate\Http\Request;
 use App\Transformers\MenuTransformer;
+use App\Http\Requests\StoreMenuRequest;
+use App\Http\Requests\UpdateMenuRequest;
 use App\Restaurante;
 
 class MenuController extends Controller
@@ -16,6 +18,7 @@ class MenuController extends Controller
      */
     public function __construct()
     {
+        //restrict acesses to change database for non authenticated users
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
     }
     /**
@@ -34,9 +37,13 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMenuRequest $request)
     {
-        //
+        $request['price'] = str_replace(',', '.', $request['price']);
+        $menu = Menu::create(array_merge($request->all(), ['restaurante_id' => env('DB_RESTAURANTE')]));
+
+        return fractal($menu, new MenuTransformer())->respond(201);
+        
     }
 
     /**
@@ -54,9 +61,8 @@ class MenuController extends Controller
             ], 404);
 
         return fractal()
-            ->item($menu)
-            ->transformWith(new MenuTransformer())
-            ->toArray();
+                ->item($menu)
+                ->transformWith(new MenuTransformer());
     }
 
     /**
@@ -66,9 +72,16 @@ class MenuController extends Controller
      * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(UpdateMenuRequest $request, Menu $menu)
     {
-        //
+        if($menu->restaurante_id != env('DB_RESTAURANTE'))
+            return response()->json([
+                'data' => 'Resource not found'
+            ], 404);
+
+        $menu->update($request->all());
+
+        return fractal($menu, new MenuTransformer())->respond(200);
     }
 
     /**
@@ -79,6 +92,13 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        if($menu->restaurante_id != env('DB_RESTAURANTE'))
+            return response()->json([
+                'data' => 'Resource not found'
+            ], 404);
+
+        $menu->delete();
+
+        return fractal($menu, new MenuTransformer())->respond(200);
     }
 }

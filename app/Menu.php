@@ -12,16 +12,7 @@ class Menu extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'capacity', 'type', 'open', 'close', 'location'
-    ];
-
-     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'id',
+        'item', 'description', 'type', 'price', 'restaurante_id'
     ];
 
     /**

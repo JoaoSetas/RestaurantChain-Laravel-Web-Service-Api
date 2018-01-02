@@ -15,6 +15,7 @@ class MenuTransformer extends TransformerAbstract
     public function transform(Menu $menu)
     {
         return [
+            'id' => $menu->id,
             'item' => $menu->item,
             'description' => $menu->description,
             'type' => $menu->type,

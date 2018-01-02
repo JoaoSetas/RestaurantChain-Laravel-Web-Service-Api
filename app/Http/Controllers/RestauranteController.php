@@ -35,6 +35,6 @@ class RestauranteController extends Controller
 
         $restaurante->update($request->all());
 
-        return response()->json($restaurante, 200);
+        return fractal($restaurante, new RestauranteTransformer())->respond(200);
     }
 }
