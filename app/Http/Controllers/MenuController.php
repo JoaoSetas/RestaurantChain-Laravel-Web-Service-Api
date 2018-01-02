@@ -10,6 +10,15 @@ use App\Restaurante;
 class MenuController extends Controller
 {
     /**
+     * Instantiate a new MenuController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -17,16 +26,6 @@ class MenuController extends Controller
     public function index()
     {
         return Restaurante::findOrFail(env('DB_RESTAURANTE'))->menu->transformWith(new MenuTransformer())->toArray();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -58,17 +57,6 @@ class MenuController extends Controller
             ->item($menu)
             ->transformWith(new MenuTransformer())
             ->toArray();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Menu $menu)
-    {
-        //
     }
 
     /**

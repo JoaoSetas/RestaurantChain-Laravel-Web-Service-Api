@@ -24,6 +24,8 @@ class Restaurante extends Model
         'id',
     ];
 
+    public $timestamps = false;
+
     public function menu()
     {
         return $this->hasMany('App\Menu');

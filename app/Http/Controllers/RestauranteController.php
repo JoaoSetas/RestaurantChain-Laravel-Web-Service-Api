@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Restaurante;
 use Illuminate\Http\Request;
 use App\Transformers\RestauranteTransformer;
+use App\Http\Requests\UpdateRestauranteRequest;
 
 class RestauranteController extends Controller
 {
@@ -28,8 +29,12 @@ class RestauranteController extends Controller
      * @param  \App\Restaurante  $restaurante
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Restaurante $restaurante)
+    public function update(UpdateRestauranteRequest $request)
     {
-        //
+        $restaurante = Restaurante::findOrFail(env('DB_RESTAURANTE'));
+
+        $restaurante->update($request->all());
+
+        return response()->json($restaurante, 200);
     }
 }

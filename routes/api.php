@@ -15,24 +15,21 @@ use App\Produto;
 */
 Route::group(['middleware' => 'auth:api'], function() {
 
-    Route::get('/user', function (Request $request) {
+    Route::get('user', function (Request $request) {
         return $request->user();
     });
 
-    Route::get('/produtos', 'ProdutoController@index')->name('produtos');
-
-    Route::get('/produto/{produto}', 'ProdutoController@show');
+    Route::patch('restaurante', 'RestauranteController@update');
 
 });
 
-Route::post('/register', 'RegisterController@register');
+Route::post('register', 'RegisterController@register');
 
-//TODO function update
-Route::resource('restaurante', 'RestauranteController',
-                ['only' => ['index', 'update']]);
+Route::apiResource('produto', 'ProdutoController',  
+    ['only' => ['index', 'show']]);
+
+Route::get('restaurante', 'RestauranteController@index');
 
 //TODO all other controller resources
-Route::get('restaurante/menu', 'MenuController@index');
-
-Route::get('restaurante/menu/{menu}', 'MenuController@show');
+Route::apiResource('restaurante/menu', 'MenuController');
 

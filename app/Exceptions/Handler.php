@@ -52,9 +52,6 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
 
-        if($exception instanceof AuthenticationException)
-            abort(404);
-
         // This will replace our 404 response with
         // a JSON response.
         if($request->wantsJson()){
@@ -66,8 +63,13 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'data' => 'Resource not found'
             ], 404);
+        }else{   
+            if($exception instanceof AuthenticationException)
+                abort(404);
         }
+
         
+     
         return parent::render($request, $exception);
     }
 }
