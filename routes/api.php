@@ -30,6 +30,8 @@ Route::apiResource('produto', 'ProdutoController',
 
 Route::get('restaurante', 'RestauranteController@index');
 
-//TODO all other controller resources
 Route::apiResource('restaurante/menu', 'MenuController');
+
+//TODO finish resources
+Route::apiResource('restaurante/reserva', 'ReservaController');
 

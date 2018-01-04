@@ -54,15 +54,7 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        //If the menu item is not from this restaurante return exeption
-        if($menu->restaurante_id != env('DB_RESTAURANTE'))
-            return response()->json([
-                'data' => 'Resource not found'
-            ], 404);
-
-        return fractal()
-                ->item($menu)
-                ->transformWith(new MenuTransformer());
+        return Parent::apiHandler($menu, new MenuTransformer());
     }
 
     /**
@@ -70,18 +62,16 @@ class MenuController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Menu  $menu
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response  returns the item before the edit
      */
     public function update(UpdateMenuRequest $request, Menu $menu)
     {
-        if($menu->restaurante_id != env('DB_RESTAURANTE'))
-            return response()->json([
-                'data' => 'Resource not found'
-            ], 404);
+        $fractal = Parent::apiHandler($menu, new MenuTransformer(), 200);
 
-        $menu->update($request->all());
+        if($fractal->getData()->data !== 'Resource not found')
+            $menu->update($request->all());
 
-        return fractal($menu, new MenuTransformer())->respond(200);
+        return $fractal;
     }
 
     /**
@@ -92,13 +82,11 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        if($menu->restaurante_id != env('DB_RESTAURANTE'))
-            return response()->json([
-                'data' => 'Resource not found'
-            ], 404);
+        $fractal = Parent::apiHandler($menu, new MenuTransformer(), 200);
 
-        $menu->delete();
+        if($fractal->getData()->data !== 'Resource not found')
+            $menu->delete();
 
-        return fractal($menu, new MenuTransformer())->respond(200);
+        return $fractal;
     }
 }

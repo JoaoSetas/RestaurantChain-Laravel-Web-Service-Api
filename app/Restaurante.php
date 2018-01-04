@@ -30,4 +30,9 @@ class Restaurante extends Model
     {
         return $this->hasMany('App\Menu');
     }
+
+    public function reserva()
+    {
+        return $this->hasMany('App\Reserva');
+    }
 }
