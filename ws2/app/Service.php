@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurante extends Model
+class Service extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Restaurante extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'capacity', 'type', 'open', 'close', 'location'
+        'name', 'url'
     ];
 
      /**
@@ -24,15 +24,8 @@ class Restaurante extends Model
         'id',
     ];
 
-    public $timestamps = false;
-
-    public function menu()
+    public function routes()
     {
-        return $this->hasMany('App\Menu');
-    }
-
-    public function reserva()
-    {
-        return $this->hasMany('App\Reserva');
+        return $this->hasMany('App\Route');
     }
 }

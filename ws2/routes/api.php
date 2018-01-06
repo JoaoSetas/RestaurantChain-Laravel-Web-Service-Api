@@ -35,3 +35,5 @@ Route::apiResource('menu', 'MenuController');
 //TODO finish resources
 Route::apiResource('reserva', 'ReservaController');
 
+Route::apiResource('service', 'ServiceController');
+
