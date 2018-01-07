@@ -12,7 +12,7 @@ class Route extends Model
      * @var array
      */
     protected $fillable = [
-        'route', 'services_id'
+        'route', 'service_id'
     ];
 
      /**

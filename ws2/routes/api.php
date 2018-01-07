@@ -19,8 +19,6 @@ Route::group(['middleware' => 'auth:api'], function() {
         return $request->user();
     });
 
-    Route::patch('restaurante', 'RestauranteController@update');
-
 });
 
 Route::post('register', 'RegisterController@register');
@@ -28,12 +26,10 @@ Route::post('register', 'RegisterController@register');
 Route::apiResource('produto', 'ProdutoController',  
     ['only' => ['index', 'show']]);
 
-Route::get('restaurante', 'RestauranteController@index');
-
-Route::apiResource('menu', 'MenuController');
-
 //TODO finish resources
 Route::apiResource('reserva', 'ReservaController');
 
 Route::apiResource('service', 'ServiceController');
+
+Route::apiResource('service.route', 'RouteController');
 
