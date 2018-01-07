@@ -17,7 +17,7 @@ class RestauranteController extends Controller
     public function index()
     {
         return fractal()
-            ->item(Restaurante::findOrFail(env('DB_RESTAURANTE')))
+            ->item(Restaurante::findOrFail(config('app.restaurante_id')))
             ->transformWith(new RestauranteTransformer())
             ->toArray();
     }
@@ -31,7 +31,7 @@ class RestauranteController extends Controller
      */
     public function update(UpdateRestauranteRequest $request)
     {
-        $restaurante = Restaurante::findOrFail(env('DB_RESTAURANTE'));
+        $restaurante = Restaurante::findOrFail(config('app.restaurante_id'));
 
         $restaurante->update($request->all());
 

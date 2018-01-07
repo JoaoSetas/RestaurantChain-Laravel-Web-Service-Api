@@ -30,7 +30,7 @@ class ReservaController extends Controller
      */
     public function index()
     {
-        return Restaurante::findOrFail(env('DB_RESTAURANTE'))->reserva->transformWith(new ReservaTransformer())->toArray();
+        return Restaurante::findOrFail(config('app.restaurante_id'))->reserva->transformWith(new ReservaTransformer())->toArray();
     }
 
     /**
@@ -46,7 +46,7 @@ class ReservaController extends Controller
         if($checked )
             return $checked;
 
-        $reserva = Reserva::create(array_merge($request->all(), ['restaurante_id' => env('DB_RESTAURANTE')]));
+        $reserva = Reserva::create(array_merge($request->all(), ['restaurante_id' => config('app.restaurante_id')]));
 
         return fractal($reserva, new ReservaTransformer())->respond(201);
     }
@@ -108,7 +108,7 @@ class ReservaController extends Controller
      * @return null if the reservation can be added
      */
     public function checkCapacity($newReserva = 0){
-        $reservas = Restaurante::findOrFail(env('DB_RESTAURANTE'))->reserva
+        $reservas = Restaurante::findOrFail(config('app.restaurante_id'))->reserva
                                 ->where('date', '>=' , Carbon::now()->subHours(2))
                                 ->where('date', '<=' , Carbon::now()->addHours(2));
         
@@ -117,7 +117,7 @@ class ReservaController extends Controller
         foreach($reservas as $item)
             $sum += $item->number;
 
-        if($sum > Restaurante::findOrFail(env('DB_RESTAURANTE'))->capacity)
+        if($sum > Restaurante::findOrFail(config('app.restaurante_id'))->capacity)
             return response()->json([
                 'data' => 'Reservation number exeeded the restaurante capacity'
             ], 404); 

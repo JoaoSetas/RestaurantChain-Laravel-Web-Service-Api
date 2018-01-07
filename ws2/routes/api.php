@@ -33,3 +33,8 @@ Route::apiResource('service', 'ServiceController');
 
 Route::apiResource('service.route', 'RouteController');
 
+Route::post('search', 'SearchController@search');
+
+Route::get('search/all', 'SearchController@allRoutes');
+
+

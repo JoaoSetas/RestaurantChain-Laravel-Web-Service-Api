@@ -18,7 +18,7 @@ class Controller extends BaseController
      * @return void
      */
     protected static function apiHandler(&$item, $transformer, $exeption = null){
-        if($item->restaurante_id != env('DB_RESTAURANTE'))
+        if($item->restaurante_id != config('app.restaurante_id'))
             return response()->json([
                 'data' => 'Resource not found'
             ], 404);

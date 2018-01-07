@@ -28,7 +28,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return Restaurante::findOrFail(env('DB_RESTAURANTE'))->menu->transformWith(new MenuTransformer())->toArray();
+        return Restaurante::findOrFail(config('app.restaurante_id'))->menu->transformWith(new MenuTransformer())->toArray();
     }
 
     /**
@@ -40,7 +40,7 @@ class MenuController extends Controller
     public function store(StoreMenuRequest $request)
     {
         $request['price'] = str_replace(',', '.', $request['price']);
-        $menu = Menu::create(array_merge($request->all(), ['restaurante_id' => env('DB_RESTAURANTE')]));
+        $menu = Menu::create(array_merge($request->all(), ['restaurante_id' => config('app.restaurante_id')]));
 
         return fractal($menu, new MenuTransformer())->respond(201);
         
