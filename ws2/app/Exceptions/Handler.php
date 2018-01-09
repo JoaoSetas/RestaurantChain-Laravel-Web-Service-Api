@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Auth\AuthenticationException;
 
@@ -64,7 +65,7 @@ class Handler extends ExceptionHandler
                 'data' => 'Resource not found'
             ], 404);
         }else{   
-            if($exception instanceof AuthenticationException)
+            if($exception instanceof AuthenticationException || $exception instanceof MethodNotAllowedHttpException)
                 abort(404);
         }
 

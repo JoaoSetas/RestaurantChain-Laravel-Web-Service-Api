@@ -20,7 +20,7 @@ class ReservaController extends Controller
     public function __construct()
     {
         //restrict acesses to change database for non authenticated users
-        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('auth:api', ['exept' => ['store']]);
     }
 
     /**
