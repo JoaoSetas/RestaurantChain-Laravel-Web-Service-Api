@@ -6,18 +6,14 @@ use Illuminate\Http\Request;
 use App\Route;
 use App\Service;
 use Ixudra\Curl\Facades\Curl;
+use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
 {
     public function search(Request $request){
-        $routeData = [];
-        foreach(Service::all() as $service)
-            foreach($service->routes as $route)
-                array_push($routeData, Curl::to($service->url . $route->route)
-                    ->withContentType('application/json')
-                    ->withHeader('Accept: application/json')
-                    ->asJson( true )
-                    ->get()['data']);
+        $routeData = Cache::remember('WSData', 1, function () {
+                            return $this->allRoutesData();
+                        });
 
         $data = $this->findPropertyRoutes($request, $routeData);
         return $data ? $data : response()->json([
@@ -40,16 +36,15 @@ class SearchController extends Controller
         return $found;
     }
 
-    public function allRoutes(){
-        $response = [];
+    public function allRoutesData(){
+        $array = [];
         foreach(Service::all() as $service)
             foreach($service->routes as $route)
-                array_push($response, Curl::to($service->url . $route->route)
+                array_push($array, Curl::to($service->url . $route->route)
                     ->withContentType('application/json')
                     ->withHeader('Accept: application/json')
                     ->asJson( true )
                     ->get()['data']);
-                
-        return $response;
+        return $array;
     }
 }
