@@ -20,6 +20,7 @@ class MenuTransformer extends TransformerAbstract
             'description' => $menu->description,
             'type' => $menu->type,
             'price' => $menu->price,            
+            'restaurante_id' => $menu->restaurante_id  
         ];
     }
 }

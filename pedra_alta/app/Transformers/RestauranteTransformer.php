@@ -15,6 +15,7 @@ class RestauranteTransformer extends TransformerAbstract
     public function transform(Restaurante $restaurante)
     {
         return [
+            'id' => $restaurante->id,
             'name' => $restaurante->name,
             'capacity' => $restaurante->capacity,
             'type' => $restaurante->type,

@@ -19,7 +19,8 @@ class MenuTransformer extends TransformerAbstract
             'item' => $menu->item,
             'description' => $menu->description,
             'type' => $menu->type,
-            'price' => $menu->price,            
+            'price' => $menu->price,   
+            'restaurante_id' => $menu->restaurante_id         
         ];
     }
 }

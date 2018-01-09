@@ -15,6 +15,7 @@ class ServiceTransformer extends TransformerAbstract
     public function transform(Service $service)
     {
         return [
+            'id' => $service->id,
             'name'=> $service->name,
             'url' => $service->url
         ];

@@ -33,6 +33,7 @@ Route::apiResource('service', 'ServiceController');
 
 Route::apiResource('service.route', 'RouteController');
 
+//TODO comment the controller
 Route::post('search', 'SearchController@search');
 
 Route::get('search/all', 'SearchController@allRoutes');
