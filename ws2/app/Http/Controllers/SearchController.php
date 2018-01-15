@@ -11,12 +11,13 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class SearchController extends Controller
 {
-    public function search(Request $request){
-        $routeData = Cache::remember($request->has('service') ? 'Service'.$request->input('service') : 'WSData', 1, function () use ($request) {
-            return $this->routeData($request->input('service'));
+    public function search(Request $request, Service $service){
+        $routeData = Cache::remember($service->exists ? $service->id : 'WSData', 1, function () use ($service) {
+            return $this->routeData($service);
         });
 
         $data = $this->findPropertyRoutes($request, $routeData);
+
         return $data ? $data : response()->json([
                                     'data' => 'Resource not found'
                                 ], 404);;
@@ -31,30 +32,49 @@ class SearchController extends Controller
                 if(in_array($RequestKey, $dotKeysArray))
                     if($field == '*' || strpos(strtolower(array_get($routeData, $key)), strtolower($field)) !==  false)
                         array_push($found, array_get($routeData, implode('.', array_slice($dotKeysArray, 0, array_search($RequestKey, $dotKeysArray)))));
-                
         }
 
-        return $found;
+        return empty($found) ? $routeData : $found;
     }
-
-    private function routeData($id){
-        if($id != null)
-            return $this->getRouteData(Service::findOrFail($id));
+    /**
+     * Return all data from a service or all services
+     *
+     * @param Service $service Service to get data from or null to get data from all services
+     * @return JsonObject service data
+     */
+    private function routeData(Service $service){
+        if($service->exists)
+            return $this->curlRouteData($service);
 
         $data = [];
-        foreach(Service::all() as $service)
-                array_push($data, $this->getRouteData($service));
+        foreach(Service::all() as $item)
+                array_push($data, $this->curlRouteData($item));
 
         return $data;
     }
-    private function getRouteData($service){
+    /**
+     * Performe the curl request to get all data from a service routes
+     *
+     * @param [type] $service the service to request
+     * @return JsonObject return the json response as object
+     */
+    private function curlRouteData($service){
         $data = [];
         foreach($service->routes as $route)
-            array_push($data, Curl::to($service->url . $route->route)
-                ->withContentType('application/json')
-                ->withHeader('Accept: application/json')
-                ->asJson( true )
-                ->get()['data']);
+            array_push($data, array_merge(
+                ['service' => [
+                    'service_id' => $service->id,
+                    'service_name' => $service->name,
+                    'service_route' => $route->route
+                    ]
+                ],
+                Curl::to($service->url . $route->route)
+                    ->withContentType('application/json')
+                    ->withHeader('Accept: application/json')
+                    ->asJson(true)
+                    ->get()['data']
+            ));
+        
         return $data;
     }
 }

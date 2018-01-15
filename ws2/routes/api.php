@@ -21,21 +21,19 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 });
 
+//TODO unit test
+//TODO adicionar outro typo de ws1
+
 Route::post('register', 'RegisterController@register');
 
 Route::apiResource('produto', 'ProdutoController',  
     ['only' => ['index', 'show']]);
-
-//TODO finish resources
-Route::apiResource('reserva', 'ReservaController');
 
 Route::apiResource('service', 'ServiceController');
 
 Route::apiResource('service.route', 'RouteController');
 
 //TODO comment the controller
-Route::post('search', 'SearchController@search');
-
-Route::get('search/all', 'SearchController@allRoutes');
+Route::match(array('GET', 'POST'), 'search/{service?}', 'SearchController@search');
 
 
