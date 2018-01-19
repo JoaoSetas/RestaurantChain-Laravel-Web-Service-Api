@@ -23,12 +23,13 @@ class ReservaController extends Controller
                     ->asJson(true)
                     ->get()['data'];  
         return $rota;
-        /*Curl::to($rota.$route->route)
+    /*Curl::to($rota.$route->route)
             ->withContentType('application/json')
             ->withHeader('Accept: application/json')
             ->asJson(true)
-            ->get()['data'];*/
-     }
+            ->get()['data'];
+     }*/
+    }
      public function curlRouteData(/*Usar_O_StoreServiceTransformer_do_ws1,*/Request $request, Service $service){
         //if()
             return response()->json([
