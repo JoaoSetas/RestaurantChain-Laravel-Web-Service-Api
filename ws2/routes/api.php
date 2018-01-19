@@ -20,14 +20,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
 
 });
-
-//TODO unit test
-//TODO adicionar outro typo de ws1
-
+//reserva nao pode ser fora de horas
+//reserva number
 Route::post('register', 'RegisterController@register');
-
-Route::apiResource('produto', 'ProdutoController',  
-    ['only' => ['index', 'show']]);
 
 Route::apiResource('service', 'ServiceController');
 
@@ -35,5 +30,3 @@ Route::apiResource('service.route', 'RouteController');
 
 //TODO comment the controller
 Route::match(array('GET', 'POST'), 'search/{service?}', 'SearchController@search');
-
-

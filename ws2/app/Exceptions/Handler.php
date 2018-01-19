@@ -59,14 +59,14 @@ class Handler extends ExceptionHandler
             if ($exception instanceof HttpException)
                 return response()->json([
                     'data' => 'Route not found'
-                ], 404);
+                ], 405);
             else if ($exception instanceof ModelNotFoundException)
             return response()->json([
                 'data' => 'Resource not found'
-            ], 404);
+            ], 406);
         }else{   
             if($exception instanceof AuthenticationException || $exception instanceof MethodNotAllowedHttpException)
-                abort(404);
+                abort(407);
         }
 
         

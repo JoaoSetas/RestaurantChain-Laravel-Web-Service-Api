@@ -21,7 +21,7 @@ class ServiceController extends Controller
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
     }
     
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
