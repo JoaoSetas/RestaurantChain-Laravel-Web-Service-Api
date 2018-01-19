@@ -21,7 +21,6 @@ class RouteController extends Controller
         //restrict acesses to change database for non authenticated users
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
     }
-    
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +57,6 @@ class RouteController extends Controller
             ->transformWith(new RouteTransformer())
             ->toArray();
     }
-
     /**
      * Update the specified resource in storage.
      *

@@ -20,7 +20,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
 
 });
-
 //TODO unit test
 //TODO adicionar outro typo de ws1
 
@@ -36,4 +35,5 @@ Route::apiResource('service.route', 'RouteController');
 //TODO comment the controller
 Route::match(array('GET', 'POST'), 'search/{service?}', 'SearchController@search');
 
-
+//Route::get('reserva/{service}', 'ReservaController@teste');
+Route::get('reserva/{service}', 'ReservaController@teste');

@@ -16,15 +16,32 @@ class ReservaController extends Controller
         $this->middleware('auth:api', ['only' => ['show', 'new', 'destroy']]);
     }
  
-     public function show(Request $request, Service $service){
-        Curl::to($service->url . $route->route)//obter o conteúdo
+     public function show(Service $service){
+        $rota=Curl::to($service->url . $route->route)//obter o conteúdo
                     ->withContentType('application/json')
                     ->withHeader('Accept: application/json')
                     ->asJson(true)
-                    ->get()['data'];
+                    ->get()['data'];  
+        return $rota;
+        /*Curl::to($rota.$route->route)
+            ->withContentType('application/json')
+            ->withHeader('Accept: application/json')
+            ->asJson(true)
+            ->get()['data'];*/
+     }
+     public function curlRouteData(/*Usar_O_StoreServiceTransformer_do_ws1,*/Request $request, Service $service){
+        //if()
+            return response()->json([
+                    'data' => 'Serviço não contem route reserva'
+                ], 404);
+            }
+
+
+     public function teste(Service $service){
+
+        return "teste";
      }
 
-     
      public function new(StoreReservaRequest $request, Service $service){
         $resposta = Curl::to($service->url . '/reserva')
             ->withContentType('application/json')
@@ -38,7 +55,7 @@ class ReservaController extends Controller
 
 
     //tanto faz espera ai
-    public function destroy(Request $request, Service $service){
+    public function destroy(Service $service){
 
     }
 }
