@@ -36,6 +36,6 @@ Route::apiResource('service.route', 'RouteController');
 Route::match(array('GET', 'POST'), 'search/{service?}', 'SearchController@index');
 
 //Route::get('reserva/{service}', 'ReservaController@teste');
-Route::get('reserva/{service}', 'ReservaController@show');
+Route::get('reserva/{service}', 'ReservaController@index');
 
 Route::get('reserva/{service}/{reserva_id}', 'ReservaController@show');

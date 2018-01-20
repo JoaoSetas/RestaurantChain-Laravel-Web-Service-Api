@@ -13,7 +13,7 @@ class ReservaController extends Controller
     public function __construct()
     {
         //restrict acesses to change database for non authenticated users
-        $this->middleware('auth:api', ['only' => ['show', 'new', 'destroy']]);
+        //$this->middleware('auth:api', ['only' => ['show', 'new', 'destroy']]);
     }
 
     //so nao é preciso authorization ao fazer store
@@ -25,7 +25,8 @@ class ReservaController extends Controller
                     ->withHeader('Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhhMTVjMzUzNjU1MTA0NGFhZjMyNmFmMjY0NmQxNWRiODU2MTU2OGRiM2MxNzYzNjU4YTY4ZWM5ZDA0NTYwNjNkOWZkNzNjZTllN2MxZmVjIn0.eyJhdWQiOiIyIiwianRpIjoiOGExNWMzNTM2NTUxMDQ0YWFmMzI2YWYyNjQ2ZDE1ZGI4NTYxNTY4ZGIzYzE3NjM2NThhNjhlYzlkMDQ1NjA2M2Q5ZmQ3M2NlOWU3YzFmZWMiLCJpYXQiOjE1MTQ1NzE1MDIsIm5iZiI6MTUxNDU3MTUwMiwiZXhwIjoxNTQ2MTA3NTAyLCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.QDM5vBR87zmhfpSuRw1XOvJxswi6wDA79W7-2zji-dQa-EuEr9wj7OB4mGv-U6o6xz-Z02tPc5l4ErmwLjMLlMgRRK2rzvYw9JmZAcGxAeC4mlhL5f-mg4OQEewD9efjKxfWljj0k8_AvWpX_0hOLq-RtZYzIB5OxKTA5uET24u1P2Q_SenPvgY50Iq6Oz355LOGpFhknx_UhoX4IwhrNlnnfuOZBsC6yVOACOPOXVdlFPT6Je_GVBT-Y2xFcr8vNb12gIBHDBTy4HBPZ9VnR0l2FTuRwd8r1a8uF0hCB44l92hQ0EtZ_ctLtD-GocRJNAcATXIb2gHpHE12fuhPiUB5oPB_94toRG-Z_nvqpXGwh3t9-TjvOMwU1HXvBcCDPhzdNOANIkft5r90lcVe9nNQXYytCq4xFy-QuCL513O42b7U5zPsj4sw3OeSqeEKJsao1c5movxZc0DP3NUfu6Tn0IXzEsZOvPjAdpYALntS1Xy2s_eK8no8Ti3UGezFgCoWVprcg8PYJtRd21wsAmRZgMrJrlNUL9fghCfaDHYv6WcAzFGdKG38sstfNMwGpQr0weo-Px3N_ma0YQ92h5H5bGec56NVXdhSNBYHNVe7USzr9MJQGoKirBFtaiOHNnZZQeuZUP7VCiicUiudtpi16kvtUvaSTHshESQrYNs')
                     ->asJson(true)
                     ->get();  
-        return $reserva;  //depois tens de usar um transformer no retorn
+                    return $reserva;
+        //return fractal (new $reserva);  //depois tens de usar um transformer no retorn
     }
 
     public function show(Service $service, $reserva_id){
@@ -37,5 +38,7 @@ class ReservaController extends Controller
                     ->get();  
         return $reserva;
     }
-   
+    public function new(Service $service){
+
+    }
 }
