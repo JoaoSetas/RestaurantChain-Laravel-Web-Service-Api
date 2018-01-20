@@ -48,8 +48,8 @@ class ReservaController extends Controller
          return fractal ($resposta,new ReservaTransformer())->respond(203); 
     }
 
-    public function destroy(Service $service){
-        $reserva = Curl::to($service->url . 'reserva')//obtem o restaurante/serviço->objeto
+    public function destroy(Service $service,Reserva $reserva){
+        $reserva = Curl::to($service->url . 'reserva'.$reserva_id)//obtem o restaurante/serviço->objeto
                     ->withContentType('application/json')
                     ->withHeader('Accept: application/json')
                     //autorização
