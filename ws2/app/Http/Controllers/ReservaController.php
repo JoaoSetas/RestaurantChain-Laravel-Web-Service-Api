@@ -15,48 +15,27 @@ class ReservaController extends Controller
         //restrict acesses to change database for non authenticated users
         $this->middleware('auth:api', ['only' => ['show', 'new', 'destroy']]);
     }
- 
-     public function show(Service $service){
-        $rota=Curl::to($service->url . $route->route)//obter o conteúdo
+
+    //so nao é preciso authorization ao fazer store
+    public function index(Service $service){
+        $reserva = Curl::to($service->url . 'reserva')//obtem o restaurante/serviço->objeto
                     ->withContentType('application/json')
                     ->withHeader('Accept: application/json')
+                    //autorização
+                    ->withHeader('Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhhMTVjMzUzNjU1MTA0NGFhZjMyNmFmMjY0NmQxNWRiODU2MTU2OGRiM2MxNzYzNjU4YTY4ZWM5ZDA0NTYwNjNkOWZkNzNjZTllN2MxZmVjIn0.eyJhdWQiOiIyIiwianRpIjoiOGExNWMzNTM2NTUxMDQ0YWFmMzI2YWYyNjQ2ZDE1ZGI4NTYxNTY4ZGIzYzE3NjM2NThhNjhlYzlkMDQ1NjA2M2Q5ZmQ3M2NlOWU3YzFmZWMiLCJpYXQiOjE1MTQ1NzE1MDIsIm5iZiI6MTUxNDU3MTUwMiwiZXhwIjoxNTQ2MTA3NTAyLCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.QDM5vBR87zmhfpSuRw1XOvJxswi6wDA79W7-2zji-dQa-EuEr9wj7OB4mGv-U6o6xz-Z02tPc5l4ErmwLjMLlMgRRK2rzvYw9JmZAcGxAeC4mlhL5f-mg4OQEewD9efjKxfWljj0k8_AvWpX_0hOLq-RtZYzIB5OxKTA5uET24u1P2Q_SenPvgY50Iq6Oz355LOGpFhknx_UhoX4IwhrNlnnfuOZBsC6yVOACOPOXVdlFPT6Je_GVBT-Y2xFcr8vNb12gIBHDBTy4HBPZ9VnR0l2FTuRwd8r1a8uF0hCB44l92hQ0EtZ_ctLtD-GocRJNAcATXIb2gHpHE12fuhPiUB5oPB_94toRG-Z_nvqpXGwh3t9-TjvOMwU1HXvBcCDPhzdNOANIkft5r90lcVe9nNQXYytCq4xFy-QuCL513O42b7U5zPsj4sw3OeSqeEKJsao1c5movxZc0DP3NUfu6Tn0IXzEsZOvPjAdpYALntS1Xy2s_eK8no8Ti3UGezFgCoWVprcg8PYJtRd21wsAmRZgMrJrlNUL9fghCfaDHYv6WcAzFGdKG38sstfNMwGpQr0weo-Px3N_ma0YQ92h5H5bGec56NVXdhSNBYHNVe7USzr9MJQGoKirBFtaiOHNnZZQeuZUP7VCiicUiudtpi16kvtUvaSTHshESQrYNs')
                     ->asJson(true)
-                    ->get()['data'];  
-        return $rota;
-    /*Curl::to($rota.$route->route)
-            ->withContentType('application/json')
-            ->withHeader('Accept: application/json')
-            ->asJson(true)
-            ->get()['data'];
-     }*/
-    }
-     public function curlRouteData(/*Usar_O_StoreServiceTransformer_do_ws1,*/Request $request, Service $service){
-        //if()
-            return response()->json([
-                    'data' => 'Serviço não contem route reserva'
-                ], 404);
-            }
-
-
-     public function teste(Service $service){
-
-        return "teste";
-     }
-
-     public function new(StoreReservaRequest $request, Service $service){
-        $resposta = Curl::to($service->url . '/reserva')
-            ->withContentType('application/json')
-            ->withHeader('Accept: application/json')
-            ->withData($request->all())
-            ->asJson( true )
-            ->post()['data'];
-
-        return $resposta; 
+                    ->get();  
+        return $reserva;  //depois tens de usar um transformer no retorn
     }
 
-
-    //tanto faz espera ai
-    public function destroy(Service $service){
-
+    public function show(Service $service, $reserva_id){
+        $reserva = Curl::to($service->url . 'reserva/' . $reserva_id)//obter o conteúdo
+                    ->withContentType('application/json')
+                    ->withHeader('Accept: application/json')
+                    ->withHeader('Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhhMTVjMzUzNjU1MTA0NGFhZjMyNmFmMjY0NmQxNWRiODU2MTU2OGRiM2MxNzYzNjU4YTY4ZWM5ZDA0NTYwNjNkOWZkNzNjZTllN2MxZmVjIn0.eyJhdWQiOiIyIiwianRpIjoiOGExNWMzNTM2NTUxMDQ0YWFmMzI2YWYyNjQ2ZDE1ZGI4NTYxNTY4ZGIzYzE3NjM2NThhNjhlYzlkMDQ1NjA2M2Q5ZmQ3M2NlOWU3YzFmZWMiLCJpYXQiOjE1MTQ1NzE1MDIsIm5iZiI6MTUxNDU3MTUwMiwiZXhwIjoxNTQ2MTA3NTAyLCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.QDM5vBR87zmhfpSuRw1XOvJxswi6wDA79W7-2zji-dQa-EuEr9wj7OB4mGv-U6o6xz-Z02tPc5l4ErmwLjMLlMgRRK2rzvYw9JmZAcGxAeC4mlhL5f-mg4OQEewD9efjKxfWljj0k8_AvWpX_0hOLq-RtZYzIB5OxKTA5uET24u1P2Q_SenPvgY50Iq6Oz355LOGpFhknx_UhoX4IwhrNlnnfuOZBsC6yVOACOPOXVdlFPT6Je_GVBT-Y2xFcr8vNb12gIBHDBTy4HBPZ9VnR0l2FTuRwd8r1a8uF0hCB44l92hQ0EtZ_ctLtD-GocRJNAcATXIb2gHpHE12fuhPiUB5oPB_94toRG-Z_nvqpXGwh3t9-TjvOMwU1HXvBcCDPhzdNOANIkft5r90lcVe9nNQXYytCq4xFy-QuCL513O42b7U5zPsj4sw3OeSqeEKJsao1c5movxZc0DP3NUfu6Tn0IXzEsZOvPjAdpYALntS1Xy2s_eK8no8Ti3UGezFgCoWVprcg8PYJtRd21wsAmRZgMrJrlNUL9fghCfaDHYv6WcAzFGdKG38sstfNMwGpQr0weo-Px3N_ma0YQ92h5H5bGec56NVXdhSNBYHNVe7USzr9MJQGoKirBFtaiOHNnZZQeuZUP7VCiicUiudtpi16kvtUvaSTHshESQrYNs')
+                    ->asJson(true)
+                    ->get();  
+        return $reserva;
     }
+   
 }
