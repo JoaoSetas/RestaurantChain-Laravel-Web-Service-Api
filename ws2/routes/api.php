@@ -39,3 +39,7 @@ Route::match(array('GET', 'POST'), 'search/{service?}', 'SearchController@index'
 Route::get('reserva/{service}', 'ReservaController@index');
 
 Route::get('reserva/{service}/{reserva_id}', 'ReservaController@show');
+
+Route::post('reserva/{service}', 'ReservaController@new');
+
+Route::delete('reserva/{service}/{reserva_id}', 'ReservaController@destroy');

@@ -25,7 +25,7 @@ class UpdateReservaRequest extends FormRequest
     {
         return [
             'name' => 'string|max:100',
-            'number' => '',
+            'number' => 'integer|min:1',
             'date' => 'date_format:Y/m/d H:i:s|after_or_equal:today',
         ];
     }

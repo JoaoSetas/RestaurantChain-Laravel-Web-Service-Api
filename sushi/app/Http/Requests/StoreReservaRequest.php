@@ -25,7 +25,7 @@ class StoreReservaRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'number' => '',
+            'number' => 'required|integer|min:1',
             'date' => 'required|date_format:Y/m/d H:i:s|after_or_equal:today'
         ];
     }
