@@ -33,7 +33,7 @@ Route::apiResource('service', 'ServiceController');
 Route::apiResource('service.route', 'RouteController');
 
 //TODO comment the controller
-Route::match(array('GET', 'POST'), 'search/{service?}', 'SearchController@index');
+Route::match(array('GET', 'POST'), 'search/{service?}', 'SearchController@search');
 
 //Route::get('reserva/{service}', 'ReservaController@teste');
 Route::get('reserva/{service}', 'ReservaController@index');

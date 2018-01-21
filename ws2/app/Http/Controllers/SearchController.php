@@ -11,6 +11,13 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class SearchController extends Controller
 {
+    /**
+     * Handles and caches the searchs requests
+     *
+     * @param Request $request
+     * @param Service $service
+     * @return ObjectArray found data
+     */
     public function search(Request $request, Service $service){
         $routeData = Cache::remember($service->exists ? $service->id : 'WSData', 1, function () use ($service) {
             return $this->routeData($service);
@@ -22,7 +29,13 @@ class SearchController extends Controller
                                     'data' => 'Resource not found'
                                 ], 404);;
     }
-
+    /**
+     * Converts de data into dot annotation and find the field and value from the request
+     *
+     * @param [type] $request
+     * @param [type] $routeData
+     * @return objectArray fields found
+     */
     private function findPropertyRoutes($request, $routeData){
         $found = [];
         foreach(array_dot($routeData) as $key=>$item){
@@ -60,20 +73,22 @@ class SearchController extends Controller
      */
     private function curlRouteData($service){
         $data = [];
-        foreach($service->routes as $route)
-            array_push($data, array_merge(
-                ['service' => [
-                    'service_id' => $service->id,
-                    'service_name' => $service->name,
-                    'service_route' => $route->route
-                    ]
-                ],
-                Curl::to($service->url . $route->route)
-                    ->withContentType('application/json')
-                    ->withHeader('Accept: application/json')
-                    ->asJson(true)
-                    ->get()['data']
+
+        foreach($service->routes as $route){
+            $routeData = Curl::to($service->url . $route->route)
+                ->withContentType('application/json')
+                ->withHeader('Accept: application/json')
+                ->asJson(true)
+                ->get()['data'];
+
+            array_push($data, data_fill($routeData, array_has(array_dot($routeData), '0.item') ? '*.service' : 'service', [
+                            'service_id' => $service->id,
+                            'service_name' => $service->name,
+                            'service_route' => $route->route
+                            ]
             ));
+        }
+
         
         return $data;
     }
