@@ -1,6 +1,6 @@
 # University project RestaurantChain Laravel Web Service Api
 
-This project was built for a course in the university to create a api for seeing, managing and make reservations on a restaurant chain
+This api was built for a group project in a university course to create a api for seeing, managing and make reservations on a restaurant chain
 
 ## Development server
 
@@ -15,8 +15,8 @@ Run `php artisan serve` for a dev server.
 
 ## Built with
 
-*Laravel Framework
-*Postman for rest requests
+* Laravel Framework
+* Postman for rest requests
 
 ## Postman
 
