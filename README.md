@@ -7,10 +7,11 @@ This project was built for a course in the university to create a api for seeing
 Run `php artisan serve` for a dev server.
 
 ## Instalation
+(if you are in a development environment)
+* Execute `composer update` and add `DB_RESTAURANTE=2` in .env.exemple file
 
-* Execute `composer update` and add `DB_RESTAURANTE=2` in .env.exemple file(if you are in a development environment)
-
-* Execute `composer install` and add `DB_RESTAURANTE=2` in .env.exemple file. Then change name of file .env.exemple to .env(if you are in a production environment)
+(if you are in a production environment)
+* Execute `composer install` and add `DB_RESTAURANTE=2` in .env.exemple file. Then change name of file .env.exemple to .env
 
 ## Built with
 
@@ -19,5 +20,5 @@ Run `php artisan serve` for a dev server.
 
 ## Postman
 
-[Postman](https://documenter.getpostman.com/view/3256126/api/RVg2AUMC) collection and dos
+[Postman](https://documenter.getpostman.com/view/3256126/api/RVg2AUMC) collection and docs
 
